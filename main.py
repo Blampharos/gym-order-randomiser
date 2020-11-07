@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 from struct import pack, unpack
+from hmrandomiser import opener_locations
 
 template_file = open("rubygort.gba", "rb")
 output_file = open("rubyranded.gba", "wb")
 give_item = (b'\x1a\x00\x80', b'\x1a\x01\x80\x01\x00\x09\x00\x03')
-item_ids = (b'\x56\x01', # Strength
+item_ids = (
+            b'\x59\x01', # Waterfall
+            b'\x56\x01', # Strength
             b'\x58\x01', # Rock Smash
             b'\x03\x01', # Mach Bike
             b'\x53\x01', # Cut
             b'\x10\x01', # Acro Bike
             b'\x55\x01', # Surf
             b'\x5a\x01', # Dive
-            b'\x59\x01') # Waterfall
+    )
 
 template = template_file.read()
 template_file.close()
@@ -29,10 +32,12 @@ if(version_number != 0):
 read_pos += 4
 
 opener_scripts = bytearray(b'')
-for item in item_ids:
+for index in opener_locations:
     opener_scripts.extend(give_item[0])
-    opener_scripts.extend(item)
+    opener_scripts.extend(item_ids[index])
     opener_scripts.extend(give_item[1])
+
+#print(opener_scripts)
 
 output_file.write(template[0:read_pos])
 output_file.write(bytes(opener_scripts))
