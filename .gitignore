@@ -1,2 +1,4 @@
 *.gba
+*.sav
 *~
+__pycache__
