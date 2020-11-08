@@ -30,6 +30,7 @@ print("Template revision {}".format(version_number))
 if(version_number != 0):
     exit()
 read_pos += 4
+gym_format_start = read_pos
 
 opener_scripts = bytearray(b'')
 for index in opener_locations:
@@ -39,7 +40,9 @@ for index in opener_locations:
 
 #print(opener_scripts)
 
-output_file.write(template[0:read_pos])
-output_file.write(bytes(opener_scripts))
 read_pos += len(opener_scripts)
-output_file.write(template[read_pos:])
+gym_format_end = read_pos
+
+output_file.write(template[:gym_format_start])
+output_file.write(bytes(opener_scripts))
+output_file.write(template[gym_format_end:])
