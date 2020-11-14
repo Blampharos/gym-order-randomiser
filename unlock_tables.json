@@ -1,0 +1,75 @@
+{
+    "default_unlocks": {
+	"opener": "default",
+	"locations": [
+	    {
+		"name": "Route101Land",
+		"extrareq": []
+	    },
+	    {
+		"name": "Route102Land",
+		"extrareq": []
+	    }
+	]
+    },
+    "waterfall_unlocks": {
+	"opener": "waterfall",
+	"locations": [
+	    {
+		"name": "VictoryRoadLand",
+		"extrareq": []
+	    }
+	]
+    },
+    "rock_smash_unlocks": {
+	"opener": "rock_smash",
+	"locations": [
+	    {
+		"name": "Route110Land",
+		"extrareq": []
+	    },
+	    {
+		"name": "Route117Land",
+		"extrareq": []
+	    },
+	    {
+		"name": "Route118Land",
+		"extrareq": ["acro_bike"]
+	    }
+	]
+    },
+    "acro_bike_unlocks": {
+	"opener": "acro_bike",
+	"locations": [
+	    {
+		"name": "Route110Land",
+		"extrareq": []
+	    },
+	    {
+		"name": "Route118Land",
+		"extrareq": ["rock_smash"]
+	    },
+	    {
+		"name": "Route121Land",
+		"extrareq": []
+	    }
+	]
+    },
+    "surf_unlocks": {
+	"opener": "surf",
+	"locations": [
+	    {
+		"name": "Route110Land",
+		"extrareq": []
+	    },
+	    {
+		"name": "Route110Water",
+		"extrareq": ["rock_smash"]
+	    },
+	    {
+		"name": "Route120Water",
+		"extrareq": ["acro_bike"]
+	    }
+	]
+    }
+}
