@@ -1,39 +1,53 @@
 #!/usr/bin/env python3
 
 from pprint import PrettyPrinter
+from collections import namedtuple
 
 pp = PrettyPrinter(indent=2)
 
-default_unlocks = (
+Location = namedtuple("Location", "name extrareq")
+UnlockTable = namedtuple("UnlockTable", "opener locations")
+
+default_unlocks = UnlockTable(
     "default",
-    ( "Route101Land", set(()) ),
-    ( "Route102Land", set(()) ),
+    (
+        Location( "Route101Land", set(()) ),
+        Location( "Route102Land", set(()) ),
+    )
 )
 
-waterfall_unlocks = (
+waterfall_unlocks = UnlockTable(
     "waterfall",
-    ("VictoryRoadLand", set(()) ),
+    (
+        Location("VictoryRoadLand", set(()) ),
+    )
 )
 
-rock_smash_unlocks = (
+rock_smash_unlocks = UnlockTable(
     "rock_smash",
-    ("Route110Land", set(()) ),
-    ("Route117Land", set(()) ),
-    ("Route118Land", set(("acro_bike",)) ),
+    (
+        Location("Route110Land", set(()) ),
+        Location("Route117Land", set(()) ),
+        Location("Route118Land", set(("acro_bike",)) ),
+    )
 )
 
-acro_bike_unlocks = (
+acro_bike_unlocks = UnlockTable(
     "acro_bike",
-    ("Route110Land", set(()) ),
-    ("Route118Land", set(("rock_smash",)) ),
-    ("Route121Land", set(()) ),
+    (
+        Location("Route110Land", set(()) ),
+        Location("Route118Land", set(("rock_smash",)) ),
+        Location("Route121Land", set(()) ),
+    )
 )
 
-surf_unlocks = (
+surf_unlocks = UnlockTable(
     "surf",
-    ("Route110Land", set(()) ),
-    ("Route110Water", set(("rock_smash",)) ),
-    ("Route120Water", set(("acro_bike",)) ),
+    (
+        Location("Route110Land", set(()) ),
+        Location("Route110Water", set(("rock_smash",)) ),
+        Location("Route120Water", set(("acro_bike",)) ),
+    )
 )
 
 unlock_tables = (
@@ -49,14 +63,20 @@ visit_order = [1, 2, 3, 0]
 location_tiers = []
 unlockers_added = set()
 
+#pp.pprint(default_unlocks[1])
+#pp.pprint(rock_smash_unlocks[1:])
+
+pp.pprint(surf_unlocks.opener)
+
 for i in range(len(visit_order)):
     location_tiers.append([])
-    unlockers_added.add( unlock_tables[visit_order[i]][0] )
+    unlockers_added.add( unlock_tables[visit_order[i]].opener )
 
-    for location in unlock_tables[visit_order[i]][1:]:
-        if location[1].issubset(unlockers_added):
-            location_tiers[i].append(location[0])
+    for location in unlock_tables[visit_order[i]].locations:
+        #pp.pprint(location)
+        if location.extrareq.issubset(unlockers_added):
+            location_tiers[i].append(location.name)
     pass
 
-pp.pprint(location_tiers)
+#pp.pprint(location_tiers)
 
