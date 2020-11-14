@@ -2,3 +2,5 @@
 *.sav
 *~
 __pycache__
+*#
+*.bps
