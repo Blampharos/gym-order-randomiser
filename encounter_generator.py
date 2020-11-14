@@ -70,9 +70,11 @@ pp.pprint(surf_unlocks.opener)
 
 for i in range(len(visit_order)):
     location_tiers.append([])
-    unlockers_added.add( unlock_tables[visit_order[i]].opener )
 
-    for location in unlock_tables[visit_order[i]].locations:
+    unlock_table = unlock_tables[visit_order[i]]
+    unlockers_added.add( unlock_table.opener )
+
+    for location in unlock_table.locations:
         #pp.pprint(location)
         if location.extrareq.issubset(unlockers_added):
             location_tiers[i].append(location.name)
