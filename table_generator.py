@@ -39,25 +39,25 @@ for i in range(len(ruby_maps)):
     base_label = ruby_maps[i]["base_label"][:-5] # [:-5] Removes "_Ruby"
     if "land_mons" in ruby_maps[i]:
         locations.append(( "{}_LandMons".format(base_label),
-                           (offset_count, ()) ))
+                           (offset_count, []) ))
         offset_count += land_mons_count + info_size
     if "water_mons" in ruby_maps[i]:
         locations.append(( "{}_WaterMons".format(base_label),
-                           (offset_count, ("surf",)) ))
+                           (offset_count, [["surf"]]) ))
         offset_count += water_mons_count + info_size
     if "rock_smash_mons" in ruby_maps[i]:
         locations.append(( "{}_RockSmashMons".format(base_label),
-                           (offset_count, ("rock_smash",)) ))
+                           (offset_count, [["rock_smash",]]) ))
         offset_count += rock_smash_mons_count + info_size
     if "fishing_mons" in ruby_maps[i]:
         locations.append(( "{}_OldRodMons".format(base_label),
-                           (offset_count, ("old_rod",)) ))
+                           (offset_count, [["old_rod",]]) ))
         offset_count += old_rod_mons_count
         locations.append(( "{}_GoodRodMons".format(base_label),
-                           (offset_count, ("good_rod",)) ))
+                           (offset_count, [["good_rod",]]) ))
         offset_count += good_rod_mons_count
         locations.append(( "{}_SuperRodMons".format(base_label),
-                           (offset_count, ("super_rod",)) ))
+                           (offset_count, [["super_rod",]]) ))
         offset_count += super_rod_mons_count + info_size
 
 location_file = StringIO()
