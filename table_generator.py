@@ -39,7 +39,7 @@ for i in range(len(ruby_maps)):
     base_label = ruby_maps[i]["base_label"][:-5] # [:-5] Removes "_Ruby"
     if "land_mons" in ruby_maps[i]:
         locations.append(( "{}_LandMons".format(base_label),
-                           (offset_count, []) ))
+                           (offset_count, [[]]) ))
         offset_count += land_mons_count + info_size
     if "water_mons" in ruby_maps[i]:
         locations.append(( "{}_WaterMons".format(base_label),
@@ -60,19 +60,31 @@ for i in range(len(ruby_maps)):
                            (offset_count, [["super_rod",]]) ))
         offset_count += super_rod_mons_count + info_size
 
+mach_bike_locations = ["MeteorFalls",
+                       "Route111"]
+
 location_file = StringIO()
 location_file.write("{\n")
 for i in range(len(locations)):
+    location_name, location_info = locations[i][0], locations[i][1]
+    openers = location_info[1]
+
+    #if any(["Route111" in location_name, "MeteorFalls" in location_name]):
+    if any([locname in location_name for locname in mach_bike_locations]):
+        openers[0].append("mach_bike")
+
     comma = ","
     if(i == len(locations) - 1):
         comma = ""
     #location_file.write("  {}{}\n".format(dumps(locations[i]), comma))
-    location_file.write('  "{}": {}{}\n'.format( locations[i][0],
-                                                 dumps(locations[i][1]),
+    location_file.write('  "{}": {}{}\n'.format( location_name,
+                                                 dumps(location_info),
                                                  comma ))
 location_file.write("}\n")
 
 print(location_file.getvalue())
+#location_output = open("unlock_tables_generated.json", "wt")
+#location_output.write(location_file.getvalue())
 
 location_file.seek(0)
 reparsed_locations = load(location_file)
