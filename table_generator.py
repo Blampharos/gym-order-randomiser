@@ -61,7 +61,59 @@ for i in range(len(ruby_maps)):
         offset_count += super_rod_mons_count + info_size
 
 mach_bike_locations = ["MeteorFalls",
-                       "Route111"]
+                       "Route111",
+                       "Route112",
+                       "Route113",
+                       "Route114",
+                       "Route115",
+                       "JaggedPass",
+                       "FieryPath",
+]
+
+acro_bike_locations = ["Route118",
+                       "Route119",
+                       "Route120",
+                       "Route121",
+                       "Route122",
+                       "Route123",
+                       "SafariZone",
+]
+
+rock_smash_locations = ["Route117",
+                        "Route118",
+                        "Route119",
+                        "Route122",
+                        "Route123",
+                        "NewMauville",
+]
+
+surf_locations = ["Route105",
+                  "Route107",
+                  "Route108",
+                  "Route122",
+                  "Route123",
+                  "Route124",
+                  "Route125",
+                  "Route126",
+                  "Route127",
+                  "Route128",
+                  "Route129",
+                  "Route130",
+                  "Route131",
+                  "Route132",
+                  "Route133",
+                  "Route134",
+                  "MtPyre",
+                  "ShoalCave",
+                  "NewMauville",
+                  "AbandonedShip",
+                  "Pacifidlog",
+                  "Mossdeep",
+]
+
+dive_locations = ["Sootopolis",
+                  "SeafloorCavern",
+]
 
 location_file = StringIO()
 location_file.write("{\n")
@@ -72,6 +124,16 @@ for i in range(len(locations)):
     #if any(["Route111" in location_name, "MeteorFalls" in location_name]):
     if any([locname in location_name for locname in mach_bike_locations]):
         openers[0].append("mach_bike")
+    if any([locname in location_name for locname in acro_bike_locations]):
+        openers[0].append("acro_bike")
+    if (any([locname in location_name for locname in rock_smash_locations]) and
+        "rock_smash" not in openers[0]):
+        openers[0].append("rock_smash")
+    if (any([locname in location_name for locname in surf_locations]) and
+        "surf" not in openers[0]):
+        openers[0].append("surf")
+    if any([locname in location_name for locname in dive_locations]):
+        openers[0].append("dive")
 
     comma = ","
     if(i == len(locations) - 1):
@@ -83,8 +145,8 @@ for i in range(len(locations)):
 location_file.write("}\n")
 
 print(location_file.getvalue())
-#location_output = open("unlock_tables_generated.json", "wt")
-#location_output.write(location_file.getvalue())
+location_output = open("unlock_tables_generated.json", "wt")
+location_output.write(location_file.getvalue())
 
 location_file.seek(0)
 reparsed_locations = load(location_file)
