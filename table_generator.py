@@ -10,6 +10,7 @@ from the shell.
 from json import load, dump, dumps
 from pprint import PrettyPrinter
 from io import StringIO
+from copy import copy, deepcopy
 
 pp = PrettyPrinter(indent=2)
 
@@ -134,6 +135,13 @@ for i in range(len(locations)):
         openers[0].append("surf")
     if any([locname in location_name for locname in dive_locations]):
         openers[0].append("dive")
+    if "Route110" in location_name:
+        openers.append(copy(openers[0]))
+        openers.append(copy(openers[0]))
+        openers[0].append("acro_bike")
+        openers[1].append("rock_smash")
+        if "surf" not in openers[2]:
+            openers[2].append("surf")
 
     comma = ","
     if(i == len(locations) - 1):
