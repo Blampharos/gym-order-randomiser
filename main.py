@@ -28,6 +28,7 @@ read_pos += len("GymFormatStart")
 version_number = unpack("i", template[read_pos:read_pos + 4])[0]
 print("Template revision {}".format(version_number))
 if(version_number != 0):
+    print("Version number not valid, exiting.")
     exit()
 read_pos += 4
 gym_format_start = read_pos
