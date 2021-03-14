@@ -18,6 +18,8 @@ curropener = 0
 prevopener = 0
 badgeiter = 0
 
+visit_order = []
+
 while openers:
     curropener = openers.pop()
     if curropener == 6:
@@ -27,10 +29,13 @@ while openers:
     badgeiter += 1
     badge_locations[curropener] = badgeiter
     opener_locations[prevopener] = curropener
+    visit_order.append(curropener)
     prevopener = curropener
 
 opener_locations[prevopener] = 0
+visit_order.append(0)
 
 print(opener_locations)
 #print(badge_locations)
+print(visit_order)
 #print(openers)
