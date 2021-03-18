@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from struct import pack, unpack
-from hmrandomiser import opener_locations
+from hmrandomiser import opener_locations, visit_order
+from encounter_generator import locations
+from io import BytesIO
 
 template_file = open("rubygort.gba", "rb")
 output_file = open("rubyranded.gba", "wb")
@@ -27,7 +29,7 @@ read_pos += len("GymFormatStart")
 
 version_number = unpack("i", template[read_pos:read_pos + 4])[0]
 print("Template revision {}".format(version_number))
-if(version_number != 0):
+if(version_number != 1):
     print("Version number not valid, exiting.")
     exit()
 read_pos += 4
@@ -44,6 +46,32 @@ for index in opener_locations:
 read_pos += len(opener_scripts)
 gym_format_end = read_pos
 
+read_pos = template.find(b"EncounterFormatStart")
+enc_format_start = read_pos + len (b"EncounterFormatStart") + 4
+print(hex(enc_format_start))
+
+enc_format_end = template.find(b"EncounterFormatEnd")
+# this gets us about 2000 extra bytes but whatever
+enc_format_length = enc_format_end - enc_format_start
+
+enc_format = BytesIO(template[enc_format_start:enc_format_end])
+
+for location in locations:
+    enc_format.seek(location[1])
+    #print(location[1])
+    if "Route110_WaterMons" == location[0]:
+        #print(location)
+        pass
+    #print(len(location))
+    if len(location) == 5:
+        #print(location[4])
+        for encounter in location[4]:
+            enc_format.write(pack("BBH", *encounter))
+
 output_file.write(template[:gym_format_start])
 output_file.write(bytes(opener_scripts))
-output_file.write(template[gym_format_end:])
+output_file.write(template[gym_format_end:enc_format_start])
+output_file.write(enc_format.getvalue())
+output_file.write(template[enc_format_end:])
+
+#print(locations)
