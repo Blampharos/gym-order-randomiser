@@ -40,6 +40,16 @@ for i in range(len(visit_order)):
                     break # otherwise it will add the tier value multiple times
     unlockers_added.add( unlockers[visit_order[i]] )
     current_tier += 1
+    unlockers_added.add( "old_rod" )
+    if("acro_bike" in unlockers_added or
+       "rock_smash" in unlockers_added or
+       "surf" in unlockers_added):
+        unlockers_added.add("good_rod")
+    if("acro_bike" in unlockers_added and
+       "rock_smash" in unlockers_added and
+       "surf" in unlockers_added):
+        unlockers_added.add("super_rod")
+    print(unlockers_added)
 
 threetally = 0
 fourtally = 0
@@ -65,7 +75,7 @@ for location in locations:
         threetally += 1
     #print(location)
 
-#print(location)
+#print(locations)
 
 #print((threetally, fourtally))
 
